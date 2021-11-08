@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+    constructor() {}
 
-  constructor() { }
+    ngOnInit(): void {}
+    // Get sva pitanja
 
-  ngOnInit(): void {
-  }
+    // sortirati po popularnost U prevodu koliki mu ga je comkentara ili jakova
+    // 20 pitanja
 
+    // get more
 }
