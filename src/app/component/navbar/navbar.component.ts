@@ -1,4 +1,8 @@
-import { Component, ElementRef } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { User } from 'src/app/models/user.model';
+import { AuthService } from 'src/app/services/auth.service';
+import { LocalStorageService } from 'src/app/services/storage.service';
 
 @Component({
     selector: 'app-navbar',
@@ -8,38 +12,31 @@ import { Component, ElementRef } from '@angular/core';
         '(document:click)': 'showItems($event)',
     },
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
     isToggled: boolean = true;
+    isLoggedIn$!: Observable<User>;
+    user!: User;
+    showModal = false;
 
-    constructor(private _eref: ElementRef) {}
+    constructor(
+        private _eref: ElementRef,
+        private dataService: AuthService,
+        private storageService: LocalStorageService,
+    ) {}
 
-    // ngOnInit(): void {
-    // }
+    ngOnInit(): void {
+        this.isLoggedIn$ = this.dataService.currentUser;
+        this.isLoggedIn$.subscribe(() => {
+            this.user = this.dataService.currentUserValue;
+        });
 
-    // Navbar will have logout method using router property
-    //
-    // faUser = faUser;
-    // isLoggedIn: boolean;
-    // username: string;
+        console.log(this.user);
+    }
+    handleLogout() {
+        this.dataService.logout();
+        this.ngOnInit();
+    }
 
-    // constructor(private authService: AuthService, private router: Router) {}
-
-    // ngOnInit() {
-    //     this.authService.loggedIn.subscribe((data: boolean) => (this.isLoggedIn = data));
-    //     this.authService.username.subscribe((data: string) => (this.username = data));
-    //     this.isLoggedIn = this.authService.isLoggedIn();
-    //     this.username = this.authService.getUserName();
-    // }
-
-    // goToUserProfile() {
-    //     this.router.navigateByUrl('/user-profile/' + this.username);
-    // }
-
-    // logout() {
-    //     this.authService.logout();
-    //     this.isLoggedIn = false;
-    //     this.router.navigateByUrl('');
-    // }
     showItems(event?: Event) {
         // Needs optimization
         let eventListiner = this._eref.nativeElement.contains(event?.target);
@@ -49,7 +46,9 @@ export class NavbarComponent {
         } else if (!eventListiner) {
             this.isToggled = false;
         }
-        // this.isToggled = !this.isToggled;
-        // console.log('is Toggled', this.isToggled);
+    }
+
+    toggleModal() {
+        this.showModal = !this.showModal;
     }
 }

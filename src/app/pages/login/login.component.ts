@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { DataService } from 'src/app/services/auth.service';
-
+import { AuthService } from '../../services/auth.service';
+// import { LocalStorageService } from 'src/app/services/storage.service';
+import { LocalStorageService } from '../../services/storage.service';
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
@@ -13,8 +14,9 @@ export class LoginComponent implements OnInit {
 
     constructor(
         private fb: FormBuilder,
-        private dataService: DataService,
+        private dataService: AuthService,
         private router: Router,
+        private storageService: LocalStorageService,
     ) {}
 
     ngOnInit() {
@@ -23,11 +25,12 @@ export class LoginComponent implements OnInit {
             email: ['', [Validators.required, Validators.email]],
             password: ['', [Validators.required]],
         });
-        console.log(this.loginForm);
-        this.loginForm.valueChanges.subscribe(val => console.log(val));
     }
 
     onSubmit() {
-        this.dataService.getUserLogin(this.loginForm.value);
+        this.dataService.login(this.loginForm.value).subscribe(data => {
+            this.storageService.setItem('user', data.username);
+            this.router.navigateByUrl('/');
+        });
     }
 }

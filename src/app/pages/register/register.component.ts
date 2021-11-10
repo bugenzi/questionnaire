@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { DataService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 @Component({
     selector: 'app-register',
     templateUrl: './register.component.html',
@@ -12,7 +12,7 @@ export class RegisterComponent implements OnInit {
 
     constructor(
         private fb: FormBuilder,
-        private dataService: DataService,
+        private dataService: AuthService,
         private router: Router,
     ) {}
 

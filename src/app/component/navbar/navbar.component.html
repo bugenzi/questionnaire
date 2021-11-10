@@ -46,6 +46,7 @@
         <!-- Mobile Menu open: "block", Menu closed: "hidden" -->
         <div class="items-center md:flex">
             <div
+                *ngIf="(isLoggedIn$ | async) === null; else loggedOut"
                 class="{{ isToggled ? 'flex' : 'hidden' }}
                 flex-col md:flex md:flex-row md:mx-6
  "
@@ -156,6 +157,376 @@
                     >Register</a
                 > -->
             </div>
+
+            <ng-template
+                #loggedOut
+                class="{{ isToggled ? 'flex' : 'flex flex-col-reverse' }}
+                flex-col md:flex md:flex-row-reverse md:mx-6"
+            >
+                <button
+                    class="
+                        flex
+                        p-1
+                        pl-5
+                        pr-5
+                        bg-green-400
+                        border-2 border-green-500
+                        text-fancyBlack text-lg
+                        rounded-lg
+                        transition-colors
+                        duration-700
+                        transform
+                        hover:bg-fancyBlack hover:text-green-500
+                        focus:border-4 focus:border-green-300
+                    "
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                        />
+                    </svg>
+                    Post
+                </button>
+
+                <a
+                    routerLink=""
+                    class="
+                        my-1
+                        text-2xl text-snowWhite
+                        dark:text-gray-200
+                        hover:text-green-500
+                        active:text-green-800
+                        dark:hover:text-indigo-400
+                        md:mx-4 md:my-0
+                        flex
+                        items-center
+                    "
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                        />
+                    </svg>
+                    Home</a
+                >
+
+                <a
+                    routerLink="/register"
+                    class="
+                        my-1
+                        text-2xl text-snowWhite
+                        dark:text-gray-200
+                        hover:text-green-500
+                        active:text-green-800
+                        dark:hover:text-indigo-400
+                        md:mx-4 md:my-0
+                        flex
+                        items-center
+                    "
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
+                        />
+                    </svg>
+
+                    Profile</a
+                >
+                <button
+                    (click)="handleLogout()"
+                    class="
+                        my-1
+                        text-2xl text-snowWhite
+                        dark:text-gray-200
+                        hover:text-green-500
+                        active:text-green-800
+                        dark:hover:text-indigo-400
+                        md:mx-4 md:my-0
+                        flex
+                        items-center
+                    "
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
+                        />
+                    </svg>
+                    Logout
+                </button>
+                <div
+                    class="
+                        m-1
+                        mr-2
+                        w-12
+                        h-12
+                        relative
+                        flex
+                        justify-center
+                        items-center
+                        rounded-full
+                        bg-gray-500
+                        text-xl text-white
+                        uppercase
+                    "
+                >
+                    {{ user.username[0] }}
+                </div>
+                <button
+                    class="
+                        flex
+                        p-1
+                        pl-5
+                        pr-5
+                        bg-green-400
+                        border-2 border-green-500
+                        text-fancyBlack text-lg
+                        rounded-lg
+                        transition-colors
+                        duration-700
+                        transform
+                        hover:bg-fancyBlack hover:text-green-500
+                        focus:border-4 focus:border-green-300
+                    "
+                    type="button"
+                    (click)="toggleModal()"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+                        />
+                    </svg>
+                    <span
+                        class="
+                            absolute
+                            top-0
+                            right-0
+                            inline-flex
+                            items-center
+                            justify-center
+                            px-2
+                            py-1
+                            text-xs
+                            font-bold
+                            leading-none
+                            text-red-100
+                            transform
+                            translate-x-1/2
+                            -translate-y-1/2
+                            bg-red-600
+                            rounded-full
+                        "
+                        >99</span
+                    >
+                </button>
+                <div
+                    *ngIf="showModal"
+                    class="
+                        overflow-x-hidden overflow-y-auto
+                        fixed
+                        inset-0
+                        z-50
+                        outline-none
+                        focus:outline-none
+                        justify-center
+                        items-center
+                        flex
+                    "
+                >
+                    <div class="relative w-auto my-6 mx-auto max-w-6xl">
+                        <!--content-->
+                        <div
+                            class="
+                                border-0
+                                rounded-lg
+                                shadow-lg
+                                relative
+                                flex flex-col
+                                w-full
+                                bg-white
+                                outline-none
+                                focus:outline-none
+                            "
+                        >
+                            <!--header-->
+                            <div
+                                class="
+                                    flex
+                                    items-start
+                                    justify-between
+                                    p-5
+                                    border-b border-solid border-blueGray-200
+                                    rounded-t
+                                "
+                            >
+                                <h3 class="text-3xl font-semibold">Modal Title</h3>
+                                <button
+                                    class="
+                                        p-1
+                                        ml-auto
+                                        bg-transparent
+                                        border-0
+                                        text-black
+                                        opacity-5
+                                        float-right
+                                        text-3xl
+                                        leading-none
+                                        font-semibold
+                                        outline-none
+                                        focus:outline-none
+                                    "
+                                    (click)="toggleModal()"
+                                >
+                                    <span
+                                        class="
+                                            bg-transparent
+                                            text-black
+                                            opacity-5
+                                            h-6
+                                            w-6
+                                            text-2xl
+                                            block
+                                            outline-none
+                                            focus:outline-none
+                                        "
+                                    >
+                                        ×
+                                    </span>
+                                </button>
+                            </div>
+                            <!--body-->
+                            <div class="relative p-6 flex-auto">
+                                <p class="my-4 text-blueGray-500 text-lg leading-relaxed">
+                                    I always felt like I could do anything. That’s the main thing
+                                    people are controlled by! Thoughts- their perception of
+                                    themselves! They're slowed down by their perception of
+                                    themselves. If you're taught you can’t do anything, you won’t do
+                                    anything. I was taught I could do everything.
+                                </p>
+                            </div>
+                            <!--footer-->
+                            <div
+                                class="
+                                    flex
+                                    items-center
+                                    justify-end
+                                    p-6
+                                    border-t border-solid border-blueGray-200
+                                    rounded-b
+                                "
+                            >
+                                <button
+                                    class="
+                                        text-red-500
+                                        background-transparent
+                                        font-bold
+                                        uppercase
+                                        px-6
+                                        py-2
+                                        text-sm
+                                        outline-none
+                                        focus:outline-none
+                                        mr-1
+                                        mb-1
+                                        ease-linear
+                                        transition-all
+                                        duration-150
+                                    "
+                                    type="button"
+                                    (click)="toggleModal()"
+                                >
+                                    Close
+                                </button>
+                                <button
+                                    class="
+                                        bg-emerald-500
+                                        text-white
+                                        active:bg-emerald-600
+                                        font-bold
+                                        uppercase
+                                        text-sm
+                                        px-6
+                                        py-3
+                                        rounded
+                                        shadow
+                                        hover:shadow-lg
+                                        outline-none
+                                        focus:outline-none
+                                        mr-1
+                                        mb-1
+                                        ease-linear
+                                        transition-all
+                                        duration-150
+                                    "
+                                    type="button"
+                                    (click)="toggleModal()"
+                                >
+                                    Save Changes
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                `
+
+                <!-- <a
+                    class="
+                        my-1
+                        text-gray-700
+                        dark:text-gray-200
+                        hover:text-indigo-500
+                        dark:hover:text-indigo-400
+                        md:mx-4 md:my-0
+                    "
+                    href="#"
+                    >Register</a
+                > -->
+            </ng-template>
         </div>
     </div>
 </nav>
