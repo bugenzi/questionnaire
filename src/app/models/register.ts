@@ -5,4 +5,5 @@ export class Register implements IRegister {
     username = '';
     email = '';
     password = '';
+    posts?: any[] = [];
 }

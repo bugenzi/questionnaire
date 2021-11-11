@@ -3,4 +3,5 @@ export interface Ipost {
     title: string;
     username: string;
     desc: string;
+    comments: any[];
 }

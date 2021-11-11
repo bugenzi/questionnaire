@@ -9,6 +9,7 @@ import { NavbarComponent } from './component/navbar/navbar.component';
 import { PostCardComponent } from './component/post-card/post-card.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
+import { PostComponent } from './pages/post/post.component';
 import { RegisterComponent } from './pages/register/register.component';
 @NgModule({
     declarations: [
@@ -18,6 +19,7 @@ import { RegisterComponent } from './pages/register/register.component';
         RegisterComponent,
         LoginComponent,
         HomeComponent,
+        PostComponent,
         // DataService,
     ],
     imports: [

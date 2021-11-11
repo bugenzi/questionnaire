@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { Comments } from 'src/app/models/comment';
+import { Post } from 'src/app/models/post';
+import { User } from 'src/app/models/user.model';
+import { AuthService } from 'src/app/services/auth.service';
 import { PostService } from 'src/app/services/post.service';
 
 @Component({
@@ -8,18 +13,56 @@ import { PostService } from 'src/app/services/post.service';
     styleUrls: ['./post.component.scss'],
 })
 export class PostComponent implements OnInit {
-    posts: [] = [];
+    id!: string | null;
+    post!: Post;
+    user!: User;
+    commentForm!: FormGroup;
+    comments!: any;
     constructor(
         // private fb: FormBuilder,
         private postService: PostService,
-        private router: Router,
+        private router: ActivatedRoute,
+        private authService: AuthService,
     ) {}
 
     ngOnInit(): void {
-        // console.log('hello');
-        // this.postService.getPosts().subscribe(
-        //     res => console.log(res),
-        //     err => console.log(err),
-        // );
+        this.id = this.router.snapshot.paramMap.get('id');
+        this.user = this.authService.currentUserValue;
+        this.postService.getPostById(this.id!).subscribe((data: any) => {
+            this.post = data[0];
+            this.postService.getCommentsByPostId(this.post.id).subscribe(
+                res => {
+                    this.comments = res;
+                },
+                err => console.log(err),
+            );
+        });
+
+        this.user = this.authService.currentUserValue;
+        if (this.user !== null) {
+            this.commentForm = new FormGroup({
+                comment: new FormControl(null, [
+                    Validators.required,
+                    Validators.minLength(6),
+                    Validators.maxLength(120),
+                ]),
+            });
+        }
+    }
+    postComment() {
+        let commentData = new Comments();
+        commentData.desc = this.commentForm.get('comment')!.value;
+        commentData.username = this.user.username;
+        commentData.postId = this.post.id;
+        console.log(commentData);
+        this.postService.postComment(commentData).subscribe(
+            res => {
+                console.log(res);
+            },
+            err => console.log(err),
+        );
+    }
+    get comment() {
+        return this.commentForm.get('comment')!;
     }
 }

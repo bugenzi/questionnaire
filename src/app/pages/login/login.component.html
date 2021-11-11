@@ -1,6 +1,6 @@
 <div class="w-full max-w-xs">
     <form [formGroup]="loginForm" (submit)="onSubmit()" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        Value{{ loginForm.value | json }}
+
         <!-- 
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
@@ -26,8 +26,9 @@
             />
         </div> -->
         <div class="mb-4">
-            <label class="block text-gray-700 text-sm font-bold mb-2" for="email"> email </label>
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="email"> Email </label>
             <input formControlName="email" class="
+            {{email.invalid?' border-red-500':'border-green-500'}}
                     shadow
                     appearance-none
                     border
@@ -36,31 +37,41 @@
                     py-2
                     px-3
                     text-gray-700
+                  
                     leading-tight
                     focus:outline-none focus:shadow-outline
-                " id="email" type="text" placeholder="jondoe@gmail.com" />
+                " id="email" type="email" placeholder="jondoe@gmail.com" />
+            <p *ngIf="email.invalid" class="text-red-500 text-xs italic">Wrong email format or is empty</p>
         </div>
 
-        <div class="mb-6">
+        <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
-                Password
-            </label>
+                Password</label>
             <input formControlName="password" class="
-                    shadow
-                    appearance-none
-                    rounded
-                    w-full
-                    py-2
-                    px-3
-                    text-gray-700
-                    mb-3
-                    leading-tight
-                    focus:outline-none focus:shadow-outline
-                " id="password" type="password" placeholder="******************" autocomplete="on" />
-            <!-- <p class="text-red-500 text-xs italic">Please choose a password.</p> -->
+                        {{password.invalid?' border-red-500':'border-green-500'}}
+                                shadow
+                                appearance-none
+                                border
+                                rounded
+                                w-full
+                                py-2
+                                px-3
+                                text-gray-700
+                              
+                                leading-tight
+                                focus:outline-none focus:shadow-outline
+                            " id="password" type="password" placeholder="*****" />
+            <p *ngIf="password.invalid" class="text-red-500 text-xs italic">Passowrd is required or wrong credentials
+            </p>
+            <p class="text-red-500 text-xs italic" *ngIf="password.hasError('minlength')">
+                The minimum length for this field is {{password.errors!.minlength.requiredLength}} characters.
+            </p>
+            <p class="text-red-500 text-xs italic" *ngIf="password.hasError('maxlength')">
+                The maximum length for this field is {{password.errors!.maxlength.requiredLength}} characters.
+            </p>
         </div>
         <div class="flex items-center justify-between">
-            <button class="
+            <button [disabled]="loginForm.invalid" class="
                     bg-green-400
                     hover:bg-green-90000
                     text-white
@@ -85,5 +96,5 @@
             </a>
         </div>
     </form>
-    <p class="text-center text-gray-500 text-xs">&copy;2020 Acme Corp. All rights reserved.</p>
+
 </div>

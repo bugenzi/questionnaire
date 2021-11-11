@@ -26,9 +26,12 @@ export class AuthService {
         return this.currentUserSubject.value;
     }
     public sendUserRegister(userRegister: IRegister) {
-        let registerData: IRegister = new Register();
-        registerData = userRegister;
-        return this.httpClient.post(this.REST_API_SERVER + '/user', registerData);
+        let registerData = new Register();
+
+        registerData = { ...userRegister, posts: [] };
+        return this.httpClient
+            .post(this.REST_API_SERVER + '/user', registerData)
+            .pipe(catchError(async err => console.log(err)));
     }
 
     login(loginCred: any) {
@@ -38,7 +41,7 @@ export class AuthService {
                     (val: Ilogin) =>
                         val.email === loginCred.email && val.password === loginCred.password,
                 );
-                console.log('user here', user);
+
                 if (user) {
                     localStorage.setItem('currentUser', JSON.stringify(user));
                     this.currentUserSubject.next(user);
@@ -56,19 +59,4 @@ export class AuthService {
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(null!);
     }
-
-    // public getUserLogin(userLogin: Ilogin) {
-    //     let loginData: Ilogin = new Login();
-    //     loginData = userLogin;
-    //     let loginUser = this.httpClient.get<any>(this.REST_API_SERVER + '/user').subscribe(data => {
-    //         let user = data.find(
-    //             (val: Ilogin) =>
-    //                 val.email === loginData.email && val.password === loginData.password,
-    //         );
-    //         console.log(user);
-    //         return user;
-    //     });
-    //     console.log(loginUser);
-    //     return loginUser;
-    // }
 }

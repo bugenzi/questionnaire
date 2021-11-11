@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { LocalStorageService } from '../../services/storage.service';
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
@@ -15,19 +14,31 @@ export class LoginComponent implements OnInit {
         private fb: FormBuilder,
         private dataService: AuthService,
         private router: Router,
-        private storageService: LocalStorageService,
     ) {}
 
     ngOnInit() {
-        this.loginForm = this.fb.group({
-            email: ['', [Validators.required, Validators.email]],
-            password: ['', [Validators.required]],
+        this.loginForm = new FormGroup({
+            email: new FormControl(null, [Validators.required, Validators.email]),
+            password: new FormControl(null, [
+                Validators.required,
+                Validators.minLength(6),
+                Validators.maxLength(12),
+            ]),
         });
     }
 
     onSubmit() {
         this.dataService.login(this.loginForm.value).subscribe(data => {
-            this.router.navigateByUrl('/');
+            console.log(data);
+            if (data === undefined) this.loginForm.get('password')?.setErrors({ incorrect: true });
+            else this.router.navigateByUrl('/');
         });
+    }
+
+    get email() {
+        return this.loginForm.get('email')!;
+    }
+    get password() {
+        return this.loginForm.get('password')!;
     }
 }

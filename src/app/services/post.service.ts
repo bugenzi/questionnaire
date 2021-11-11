@@ -2,11 +2,14 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { Post } from '../models/post';
+import { Ipost } from '../models/post.model';
 @Injectable({
     providedIn: 'root',
 })
 export class PostService {
     private REST_API_SERVER = 'http://localhost:3000';
+    public currentComments$!: Observable<any>;
 
     constructor(private httpClient: HttpClient) {}
     getPosts(page?: number, limit?: number): Observable<any> {
@@ -31,6 +34,52 @@ export class PostService {
             catchError(err => 'error'),
         );
     }
+    createPost(postData: Ipost) {
+        let post = new Post();
+        post = { ...postData, comments: [] };
+        this.httpClient
+            .post(this.REST_API_SERVER + '/posts', postData)
+            .pipe(catchError(err => 'error'));
+    }
+    getPostById(id: string) {
+        let params = new HttpParams();
+        params = params.append('id', id);
+
+        return this.httpClient.get(`${this.REST_API_SERVER}/posts`, {
+            responseType: 'json',
+            params,
+        });
+    }
+    postComment(commentData: any) {
+        console.log(commentData);
+        return this.httpClient.post(`${this.REST_API_SERVER}/comments`, commentData).pipe(
+            res => {
+                console.log(res);
+                this.currentComments$ = res;
+                return res;
+            },
+            catchError(err => {
+                console.log(err);
+                return err;
+            }),
+        );
+    }
+    getCommentsByPostId(id: number) {
+        let params = new HttpParams();
+        params = params.append('postId', id);
+        return this.httpClient
+            .get(`${this.REST_API_SERVER}/comments`, {
+                params,
+            })
+            .pipe(
+                tap(_ => this.log('fetched posts')),
+                catchError(err => 'error'),
+            );
+    }
+    getTest() {
+        this.currentComments$;
+    }
+
     private handleError<T>(operation = 'operation', result?: T) {
         return (error: any): Observable<T> => {
             // TODO: send the error to remote logging infrastructure
