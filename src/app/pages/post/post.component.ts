@@ -48,6 +48,7 @@ export class PostComponent implements OnInit {
                 ]),
             });
         }
+        console.log(this.comments);
     }
     postComment() {
         let commentData = new Comments();

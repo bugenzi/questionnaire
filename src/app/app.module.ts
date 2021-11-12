@@ -11,6 +11,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { PostComponent } from './pages/post/post.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { ProfileComponent } from './profile/profile.component';
 @NgModule({
     declarations: [
         AppComponent,
@@ -20,6 +21,7 @@ import { RegisterComponent } from './pages/register/register.component';
         LoginComponent,
         HomeComponent,
         PostComponent,
+        ProfileComponent,
         // DataService,
     ],
     imports: [

@@ -3,5 +3,5 @@ export class Comments {
     id!: number;
     username!: string;
     postId!: number;
-    createdAt = Date();
+    created_at = Date();
 }

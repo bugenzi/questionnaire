@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { Post } from '../models/post';
 import { Ipost } from '../models/post.model';
 @Injectable({
@@ -9,7 +9,7 @@ import { Ipost } from '../models/post.model';
 })
 export class PostService {
     private REST_API_SERVER = 'http://localhost:3000';
-    public currentComments$!: Observable<any>;
+    // public currentComments$!: BehaviorSubject<any>;
 
     constructor(private httpClient: HttpClient) {}
     getPosts(page?: number, limit?: number): Observable<any> {
@@ -49,15 +49,23 @@ export class PostService {
             responseType: 'json',
             params,
         });
+        //     .pipe(
+        //         map(res => {
+        //             this.currentComments$.next(res);
+        //             return res;
+        //         }),
+        //     ),
+        // catchError(err => {
+        //     console.log(err);
+        //     return err;
+        // })
     }
     postComment(commentData: any) {
         console.log(commentData);
         return this.httpClient.post(`${this.REST_API_SERVER}/comments`, commentData).pipe(
-            res => {
-                console.log(res);
-                this.currentComments$ = res;
-                return res;
-            },
+            map(res => {
+                console.log('REEE', res);
+            }),
             catchError(err => {
                 console.log(err);
                 return err;
@@ -67,6 +75,9 @@ export class PostService {
     getCommentsByPostId(id: number) {
         let params = new HttpParams();
         params = params.append('postId', id);
+        params = params.append('_sort', 'created_at');
+        params = params.append('_order', 'desc');
+
         return this.httpClient
             .get(`${this.REST_API_SERVER}/comments`, {
                 params,
@@ -75,9 +86,6 @@ export class PostService {
                 tap(_ => this.log('fetched posts')),
                 catchError(err => 'error'),
             );
-    }
-    getTest() {
-        this.currentComments$;
     }
 
     private handleError<T>(operation = 'operation', result?: T) {
