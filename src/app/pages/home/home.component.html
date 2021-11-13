@@ -103,7 +103,8 @@
                     </a>
                     <span class="text-grey-light mx-1 text-xxs">•</span>
                     <span class="text-base text-gray-700">Posted by</span>
-                    <a href="#" class="text-green-400 text-base mx-1 no-underline hover:underline">{{ post.username }}
+                    <a [routerLink]="['/profile', post.userId]"
+                        class="text-green-400 text-base mx-1 no-underline hover:underline">{{ post.username }}
                     </a>
                 </div>
                 <div>

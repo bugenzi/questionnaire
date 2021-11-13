@@ -1,1 +1,124 @@
-<p>profile works!</p>
+<div class="w-full max-w-md  mx-auto bg-white shadow-md rounded-md px-6 py-4 my-6">
+    <div class="sm:flex sm:justify-between">
+        <div class="flex items-center">
+            <div class="
+                                    m-1
+                                    mr-2
+                                    w-12
+                                    h-12
+                                    relative
+                                    flex
+                                    justify-center
+                                    items-center
+                                    rounded-full
+                                    bg-gray-500
+                                    text-xl text-white
+                                    uppercase
+                                ">
+                {{ user.username[0] }}
+            </div>
+            <div class="ml-2">
+                <h3 class="text-lg text-gray-800 font-medium"> {{ user.username}}</h3>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="flex justify-between items-center mt-4">
+        <div>
+            <h4 class="mr-4  text-gray-600 text-sm">Questions</h4>
+            <span class="mt-2 text-xl font-medium text-gray-800">{{posts.length}}</span>
+        </div>
+        <div>
+            <h4 class=" ml-4 text-gray-600 text-sm">Answers</h4>
+            <span class="mt-2 text-xl font-medium text-gray-800">35</span>
+        </div>
+    </div>
+    <div class="mt-3">
+        <h4 class="text-gray-600 text-sm">User Score</h4>
+        <span class="mt-2 text-xl font-medium text-gray-800">21%</span>
+    </div>
+
+    <a class="block mt-4 text-blue-400 hover:underline" href="#">3 Collections</a>
+</div>
+<div *ngFor="let post of posts">
+    <div class="
+            flex
+            mr-5
+            mb-5
+            border border-grey-light-alt
+            hover:border-grey
+            rounded
+            bg-white
+            cursor-pointer
+        " [routerLink]="['/post', post.id]">
+        <div class="w-1/12 flex flex-col text-center pt-2"></div>
+        <div class=" w-11/12 pt-2">
+            <div class="flex items-center text-xs mb-2">
+                <a class="font-semibold no-underline hover:underline text-black flex items-center">
+                </a>
+                <span class="text-grey-light mx-1 text-xxs">•</span>
+                <span class="text-base text-gray-700">Posted by</span>
+                <a href="#" class="text-green-400 text-base mx-1 no-underline hover:underline">{{ post.username }}
+                </a>
+            </div>
+            <div>
+                <h2 class="text-lg text-green-800 font-medium mb-1">{{ post.title }}</h2>
+                <h3 class="font-medium mb-1">
+                    {{ post.desc }}
+                </h3>
+            </div>
+            <div class="inline-flex items-center my-1">
+                <div class="flex hover:bg-green-lighter p-1">
+                    <svg class="w-4 fill-current text-grey" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path
+                            d="M10 15l-4 4v-4H2a2 2 0 0 1-2-2V3c0-1.1.9-2 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-8zM5 7v2h2V7H5zm4 0v2h2V7H9zm4 0v2h2V7h-2z">
+                        </path>
+                    </svg>
+                    <span class="ml-2 text-green-400 text-xs font-semibold text-grey">{{post.comments}}
+                        Comments</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 
+    <div class="container mx-auto max-w-sm h-screen flex flex-col space-y-4 justify-center items-center">
+  <div class="bg-white w-full flex items-center p-2 rounded-xl shadow border">
+    <div class="flex items-center space-x-4">
+      <img src="https://avatars2.githubusercontent.com/u/1490347?s=460&u=39d7a6b9bc030244e2c509119e5f64eabb2b1727&v=4" alt="My profile" class="w-16 h-16 rounded-full">
+    </div>
+    <div class="flex-grow p-3">
+      <div class="font-semibold text-gray-700">
+        Antério Vieira da Silva Lima
+      </div>
+      <div class="text-sm text-gray-500">
+        You: Thanks, sounds good! . 8hr
+      </div>
+    </div>
+    <div class="p-2">
+      <img src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144" alt="My profile" class="w-4 h-4 rounded-full order-1">
+    </div>
+  </div>
+  
+  <div class="bg-white w-full flex items-center p-2 rounded-xl shadow border">
+    <div class="relative flex items-center space-x-4">
+      <img src="https://avatars2.githubusercontent.com/u/1490347?s=460&u=39d7a6b9bc030244e2c509119e5f64eabb2b1727&v=4" alt="My profile" class="w-16 h-16 rounded-full">
+      <span class="absolute h-4 w-4 bg-green-400 rounded-full bottom-0 right-0 border-2 border-white"></span>
+    </div>
+    <div class="flex-grow p-3">
+      <div class="font-semibold text-gray-700">
+        Antério Vieira da Silva Lima
+      </div>
+      <div class="text-sm text-gray-500">
+        @ktquez sent a image . 2hr
+      </div>
+    </div>
+    <div class="p-2">
+      <span class="block h-4 w-4 bg-blue-400 rounded-full bottom-0 right-0"></span>
+    </div>
+  </div>
+</div>
+ -->

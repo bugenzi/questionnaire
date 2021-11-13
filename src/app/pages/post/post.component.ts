@@ -34,9 +34,8 @@ export class PostComponent implements OnInit {
             this.post = data[0];
             this.postService.getCommentsByPostId(this.post.id).subscribe(
                 res => {
+                    console.log(this.post.id);
                     this.comments = res;
-
-                    console.log(res);
                 },
                 err => console.log(err),
             );
@@ -58,12 +57,13 @@ export class PostComponent implements OnInit {
         commentData.desc = this.commentForm.get('comment')!.value;
         commentData.username = this.user.username;
         commentData.postId = this.post.id;
-        commentData.created_at = this.datePipe.transform(commentData.created_at, 'yyyy-MM-dd')!;
+        commentData.created_at = this.datePipe.transform(commentData.created_at, 'MM-dd hh mm ss')!;
 
-        console.log(commentData);
         this.postService.postComment(commentData).subscribe(
             res => {
-                console.log(res);
+                if (res) {
+                    // window.location.reload();
+                }
             },
             err => console.log(err),
         );

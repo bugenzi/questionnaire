@@ -41,9 +41,13 @@ export class PostService {
             .post(this.REST_API_SERVER + '/posts', postData)
             .pipe(catchError(err => 'error'));
     }
-    getPostById(id: string) {
+    getPostById(id: string | number, byUser: boolean = false) {
         let params = new HttpParams();
-        params = params.append('id', id);
+        if (byUser) {
+            params = params.append('userId', id);
+        } else {
+            params = params.append('id', id);
+        }
 
         return this.httpClient.get(`${this.REST_API_SERVER}/posts`, {
             responseType: 'json',
@@ -61,7 +65,6 @@ export class PostService {
         // })
     }
     postComment(commentData: any) {
-        console.log(commentData);
         return this.httpClient.post(`${this.REST_API_SERVER}/comments`, commentData).pipe(
             map(res => {
                 console.log('REEE', res);
@@ -75,8 +78,6 @@ export class PostService {
     getCommentsByPostId(id: number) {
         let params = new HttpParams();
         params = params.append('postId', id);
-        params = params.append('_sort', 'created_at');
-        params = params.append('_order', 'desc');
 
         return this.httpClient
             .get(`${this.REST_API_SERVER}/comments`, {

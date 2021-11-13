@@ -57,11 +57,16 @@
 
                 <textarea formControlName="comment" rows="3" placeholder="Write an answer..."
                     class="border p-2 rounded w-full"></textarea>
+                <p class="text-gray-700 text-xs italic" *ngIf="comment.hasError('minlength')">
+                    The post needs to be at least {{comment.errors!.minlength.requiredLength}} characters long.
+                </p>
+
+
             </div>
             <div class="flex justify-between mx-3">
                 <div>
                     <button [disabled]="commentForm.invalid"
-                        class="px-4 py-1 bg-green-800 text-white rounded font-light hover:bg-fancyBlack">
+                        class=" disabled:opacity-50 px-4 py-1 bg-green-800 text-white rounded font-light hover:bg-fancyBlack">
                         Submit
                     </button>
                 </div>
@@ -70,9 +75,9 @@
     </div>
 
     <div *ngFor="let commentData of comments">
-        <div class="pt-2 border-2 p-5 border-green-100 bg-fancyBlack">
+        <div class="pt-2 border-2 p-5 border-green-100 bg-green-100">
             <div class="flex items-center text-xs mb-2">
-                <a class="font-semibold no-underline hover:underline text-black flex items-center"> </a>
+
                 <div class="
                     m-1
                     mr-2
@@ -89,14 +94,15 @@
                 ">
                     {{commentData.username[0]}}
                 </div>
-                <a href="#" class="text-green-400 text-base mx-1 no-underline hover:underline">{{ post.username }}
+                <a href="#" class="text-green-400 text-base mx-1 no-underline hover:underline">{{ commentData.username
+                    }}
                 </a>
             </div>
             <div>
-                <h3 class="font-medium mb-1 text-snowWhite">
+                <h3 class="font-medium mb-1 text-fancyBlack">
                     {{ commentData.desc }}
                 </h3>
-                <h4>{{commentData.created_at}}</h4>
+                <h4 class="text-gray-600 text-xs">{{commentData.created_at}}</h4>
             </div>
         </div>
     </div>

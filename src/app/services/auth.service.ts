@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -53,6 +53,14 @@ export class AuthService {
             }),
             catchError(async err => console.log(err)),
         );
+    }
+    getUserById(id: string) {
+        let params = new HttpParams();
+        params = params.append('id', id);
+
+        return this.httpClient
+            .get<any>(this.REST_API_SERVER + '/user', { params })
+            .pipe(catchError(async err => console.log(err)));
     }
     logout() {
         // remove user from local storage to log user out
