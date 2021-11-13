@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -32,7 +32,7 @@ import { ProfileComponent } from './profile/profile.component';
         ReactiveFormsModule,
         HttpClientModule,
     ],
-    providers: [],
+    providers: [DatePipe],
     bootstrap: [AppComponent],
     exports: [FormsModule, ReactiveFormsModule],
 })

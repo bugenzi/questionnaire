@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -23,6 +24,7 @@ export class PostComponent implements OnInit {
         private postService: PostService,
         private router: ActivatedRoute,
         private authService: AuthService,
+        private datePipe: DatePipe,
     ) {}
 
     ngOnInit(): void {
@@ -33,6 +35,8 @@ export class PostComponent implements OnInit {
             this.postService.getCommentsByPostId(this.post.id).subscribe(
                 res => {
                     this.comments = res;
+
+                    console.log(res);
                 },
                 err => console.log(err),
             );
@@ -48,13 +52,14 @@ export class PostComponent implements OnInit {
                 ]),
             });
         }
-        console.log(this.comments);
     }
     postComment() {
         let commentData = new Comments();
         commentData.desc = this.commentForm.get('comment')!.value;
         commentData.username = this.user.username;
         commentData.postId = this.post.id;
+        commentData.created_at = this.datePipe.transform(commentData.created_at, 'yyyy-MM-dd')!;
+
         console.log(commentData);
         this.postService.postComment(commentData).subscribe(
             res => {
