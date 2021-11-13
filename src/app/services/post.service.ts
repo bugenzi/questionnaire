@@ -36,7 +36,7 @@ export class PostService {
     }
     createPost(postData: Ipost) {
         let post = new Post();
-        post = { ...postData, comments: [] };
+        post = postData;
         this.httpClient
             .post(this.REST_API_SERVER + '/posts', postData)
             .pipe(catchError(err => 'error'));

@@ -32,7 +32,7 @@ export class PostComponent implements OnInit {
         this.user = this.authService.currentUserValue;
         this.postService.getPostById(this.id!).subscribe((data: any) => {
             this.post = data[0];
-            this.postService.getCommentsByPostId(this.post.id).subscribe(
+            this.postService.getCommentsByPostId(this.post.id!).subscribe(
                 res => {
                     console.log(this.post.id);
                     this.comments = res;
@@ -56,7 +56,7 @@ export class PostComponent implements OnInit {
         let commentData = new Comments();
         commentData.desc = this.commentForm.get('comment')!.value;
         commentData.username = this.user.username;
-        commentData.postId = this.post.id;
+        commentData.postId = this.post.id!;
         commentData.created_at = this.datePipe.transform(commentData.created_at, 'MM-dd hh mm ss')!;
 
         this.postService.postComment(commentData).subscribe(

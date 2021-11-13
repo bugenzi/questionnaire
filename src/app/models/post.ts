@@ -1,10 +1,11 @@
-import { Ipost } from './post.model';
-
 // Domain model
-export class Post implements Ipost {
-    id = 0;
-    username = '';
-    title = '';
-    desc = '';
-    comments = [];
+export class Post {
+    id?: number;
+    userId!: number;
+    username!: string;
+    title!: string;
+    desc!: string;
+    points: number = 0;
+    created_at!: string;
+    comments?: [];
 }

@@ -1,7 +1,9 @@
 export interface Ipost {
-    id: number;
+    userId: number;
     title: string;
     username: string;
+    points: number;
+    comments?: [];
     desc: string;
-    comments: any[];
+    created_at: string;
 }
