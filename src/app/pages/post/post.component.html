@@ -53,9 +53,9 @@
     </div>
 
     <div *ngFor="let commentData of comments">
-        <app-comment-card [title]="commentData.title" [desc]="commentData.desc" [username]="commentData.username"
-            [created_at]="commentData.created_at" [userId]="commentData.userId" [points]="commentData.points"
-            [id]="commentData.id"></app-comment-card>
+        <app-comment-card *ngIf="comments !== null" [title]="commentData.title" [desc]="commentData.desc"
+            [username]="commentData.username" [created_at]="commentData.created_at" [userId]="commentData.userId"
+            [points]="commentData.points" [id]="commentData.id"></app-comment-card>
     </div>
 
 </div>

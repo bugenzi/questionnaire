@@ -58,9 +58,6 @@ export class PostDialogComponent implements OnInit {
         postData.username = this.authService.currentUserValue.username;
         postData.created_at = this.datePipe.transform(new Date(), 'M/d/yy, h:mm a')!;
 
-        this.postService.createPost(postData).subscribe(
-            res => this.modalService.handleOpen1(),
-            err => console.log(err),
-        );
+        this.postService.createPost(postData).subscribe(res => this.modalService.handleOpen1());
     }
 }

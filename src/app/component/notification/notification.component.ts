@@ -26,7 +26,6 @@ export class NotificationComponent implements OnInit {
         this.showModal2$.subscribe(res => (this.showModal = res));
         this.userID = this.authService.currentUserValue.id;
         this.notificationService.getNotifications(this.userID).subscribe(res => {
-            console.log(res);
             this.notifications = res;
         });
     }

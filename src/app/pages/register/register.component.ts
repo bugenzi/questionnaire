@@ -27,20 +27,16 @@ export class RegisterComponent implements OnInit {
             ]),
         });
 
-        this.registerForm.valueChanges.subscribe(val => console.log(val));
+        this.registerForm.valueChanges.subscribe();
     }
 
     onSubmit() {
-        this.dataService.sendUserRegister(this.registerForm.value).subscribe(
-            res => {
-                this.registerForm.reset();
-                this.router.navigate(['login']);
-            },
-            err => console.log(err),
-        );
+        this.dataService.sendUserRegister(this.registerForm.value).subscribe(res => {
+            this.registerForm.reset();
+            this.router.navigate(['login']);
+        });
     }
     get username() {
-        // console.log(tihs)
         return this.registerForm.get('username')!;
     }
     get email() {

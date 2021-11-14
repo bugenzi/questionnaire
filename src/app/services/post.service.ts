@@ -41,7 +41,6 @@ export class PostService {
     createPost(postData: Ipost) {
         let post = new Post();
         post = postData;
-        console.log(post);
         return this.httpClient.post(this.REST_API_SERVER + '/posts', postData);
     }
     getPostById(id: string | number, byUser: boolean = false) {
@@ -81,7 +80,6 @@ export class PostService {
         return this.httpClient.post(`${this.REST_API_SERVER}/comments`, commentData).pipe(
             map(res => {}),
             catchError(err => {
-                console.log(err);
                 return err;
             }),
         );

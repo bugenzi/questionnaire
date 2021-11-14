@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Ilogin } from '../models/login.model';
 import { Register } from '../models/register';
@@ -30,9 +30,8 @@ export class AuthService {
         let registerData = new Register();
 
         registerData = { ...userRegister, posts: [] };
-        return this.httpClient
-            .post(this.REST_API_SERVER + '/user', registerData)
-            .pipe(catchError(async err => console.log(err)));
+        return this.httpClient.post(this.REST_API_SERVER + '/user', registerData);
+        // .pipe(catchError(async err => console.log(err)));
     }
 
     login(loginCred: any) {
@@ -52,16 +51,14 @@ export class AuthService {
 
                 return user;
             }),
-            catchError(async err => console.log(err)),
+            // catchError(async err => console.log(err)),
         );
     }
     getUserById(id: string) {
         let params = new HttpParams();
         params = params.append('id', id);
 
-        return this.httpClient
-            .get<any>(this.REST_API_SERVER + '/user', { params })
-            .pipe(catchError(async err => console.log(err)));
+        return this.httpClient.get<any>(this.REST_API_SERVER + '/user', { params }).pipe();
     }
     logout() {
         // remove user from local storage to log user out

@@ -25,7 +25,6 @@ export class LoginComponent implements OnInit {
 
     onSubmit() {
         this.dataService.login(this.loginForm.value).subscribe(data => {
-            console.log(data);
             if (data === undefined) this.loginForm.get('password')?.setErrors({ incorrect: true });
             else this.router.navigateByUrl('/');
         });

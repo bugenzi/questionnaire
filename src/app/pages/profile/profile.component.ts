@@ -23,7 +23,6 @@ export class ProfileComponent implements OnInit {
             this.postService
                 .getCommentsByUser(this.user.username)
                 .subscribe(res => (this.totalAnswers = res));
-            console.log(this.user);
             this.postService.getPostById(this.user.id, true).subscribe(res => (this.posts = res));
         } else {
             let id = this.router.snapshot.paramMap.get('id');

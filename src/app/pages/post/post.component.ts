@@ -35,13 +35,9 @@ export class PostComponent implements OnInit {
         this.user = this.authService.currentUserValue;
         this.postService.getPostById(this.id!).subscribe((data: any) => {
             this.post = data[0];
-            this.postService.getCommentsByPostId(this.post.id!).subscribe(
-                res => {
-                    console.log(this.post);
-                    this.comments = res;
-                },
-                err => console.log(err),
-            );
+            this.postService.getCommentsByPostId(this.post.id!).subscribe(res => {
+                this.comments = res;
+            });
         });
 
         this.user = this.authService.currentUserValue;
@@ -68,15 +64,10 @@ export class PostComponent implements OnInit {
         notificationData.reciverId = this.post.userId;
         (notificationData.sender = this.user.username),
             (notificationData.message = `${notificationData.sender} wrote an answer on your post`);
-        this.postService.postComment(commentData).subscribe(
-            res => {
-                this.notificationService
-                    .saveNotification(notificationData)
-                    .subscribe(data => console.log(data));
-                this.getComments();
-            },
-            err => console.log(err),
-        );
+        this.postService.postComment(commentData).subscribe(res => {
+            this.notificationService.saveNotification(notificationData).subscribe();
+            this.getComments();
+        });
     }
     get comment() {
         return this.commentForm.get('comment')!;
@@ -86,10 +77,9 @@ export class PostComponent implements OnInit {
             this.post = data[0];
             this.postService.getCommentsByPostId(this.post.id!).subscribe(
                 res => {
-                    console.log(this.post);
                     this.comments = res;
                 },
-                err => console.log(err),
+                err => alert(err),
             );
         });
     }

@@ -64,7 +64,6 @@ export class HomeComponent implements OnInit {
         this.buttonArray = [1, 2, 3];
         this.dataSub = this.postService.getPosts(this.sortPopular).subscribe(
             data => {
-                console.log(data);
                 //subscribe to server's response
                 this.postsData = data; //assign server's response to a variable
                 this.noData = false;
@@ -77,7 +76,7 @@ export class HomeComponent implements OnInit {
         );
         this.sizeSub = this.postService.getAllPosts().subscribe(
             data => (this.size = data.lenght),
-            err => console.log(err),
+            err => alert(err),
         );
     }
 
@@ -145,6 +144,5 @@ export class HomeComponent implements OnInit {
     }
     toggleModalPost() {
         this.modalService.handleOpen1();
-        // console.log(this.modalService.getModalValue);
     }
 }

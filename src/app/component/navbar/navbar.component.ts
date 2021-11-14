@@ -48,6 +48,5 @@ export class NavbarComponent implements OnInit {
 
     toggleModalNotifications() {
         this.modalService.handleOpen2();
-        console.log(this.modalService.getModalValue2.subscribe(res => res));
     }
 }

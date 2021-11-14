@@ -49,14 +49,12 @@ export class CommentCardComponent implements OnInit {
     setDislike() {
         this.dislikeActive = !this.dislikeActive;
         this.points = this.dislikeActive ? this.points - 1 : this.points + 1;
-        this.postService.handleCommentLike(this.id, this.points).subscribe(res => console.log(res));
+        this.postService.handleCommentLike(this.id, this.points).subscribe();
     }
     setLike() {
         this.likeActive = !this.likeActive;
         this.points = this.likeActive ? this.points + 1 : this.points - 1;
-        this.postService
-            .handleCommentLike(this.id || this.id, this.points)
-            .subscribe(res => console.log(res));
+        this.postService.handleCommentLike(this.id || this.id, this.points).subscribe();
     }
 
     handleLike() {
