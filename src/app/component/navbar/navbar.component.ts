@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
-import { LocalStorageService } from 'src/app/services/storage.service';
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
     selector: 'app-navbar',
@@ -21,7 +21,7 @@ export class NavbarComponent implements OnInit {
     constructor(
         private _eref: ElementRef,
         private dataService: AuthService,
-        private storageService: LocalStorageService,
+        private modalService: ModalService,
     ) {}
 
     ngOnInit(): void {
@@ -29,8 +29,6 @@ export class NavbarComponent implements OnInit {
         this.isLoggedIn$.subscribe(() => {
             this.user = this.dataService.currentUserValue;
         });
-
-        console.log(this.user);
     }
     handleLogout() {
         this.dataService.logout();
@@ -49,6 +47,7 @@ export class NavbarComponent implements OnInit {
     }
 
     toggleModalNotifications() {
-        this.showModal = !this.showModal;
+        this.modalService.handleOpen2();
+        console.log(this.modalService.getModalValue2.subscribe(res => res));
     }
 }

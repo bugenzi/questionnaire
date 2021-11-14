@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { CommentCardComponent } from './component/comment-card/comment-card.component';
 import { NavbarComponent } from './component/navbar/navbar.component';
 import { NotificationComponent } from './component/notification/notification.component';
 import { PostCardComponent } from './component/post-card/post-card.component';
@@ -25,9 +26,10 @@ import { RegisterComponent } from './pages/register/register.component';
         HomeComponent,
         PostComponent,
         ProfileComponent,
-        NotificationComponent,
         PostCardComponent,
+        CommentCardComponent,
         // DataService,
+        NotificationComponent,
     ],
     imports: [
         BrowserModule,

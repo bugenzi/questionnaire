@@ -12,6 +12,7 @@ import { PostService } from 'src/app/services/post.service';
 export class ProfileComponent implements OnInit {
     user!: User;
     posts!: any;
+    totalAnswers!: any;
     constructor(
         private postService: PostService,
         private router: ActivatedRoute,
@@ -19,11 +20,19 @@ export class ProfileComponent implements OnInit {
     ) {
         if (this.router.snapshot.routeConfig?.path === 'profile/me') {
             this.user = this.authService.currentUserValue;
+            this.postService
+                .getCommentsByUser(this.user.username)
+                .subscribe(res => (this.totalAnswers = res));
             console.log(this.user);
             this.postService.getPostById(this.user.id, true).subscribe(res => (this.posts = res));
         } else {
             let id = this.router.snapshot.paramMap.get('id');
-            this.authService.getUserById(id!).subscribe(res => (this.user = res[0]));
+            this.authService.getUserById(id!).subscribe(res => {
+                this.user = res[0];
+                this.postService
+                    .getCommentsByUser(this.user.username)
+                    .subscribe(res => (this.totalAnswers = res));
+            });
             this.postService.getPostById(id!, true).subscribe(res => (this.posts = res));
         }
     }

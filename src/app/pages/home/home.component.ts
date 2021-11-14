@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
     user!: User;
     sizeSub!: Subscription; //variables for managing subscriptions
     dataSub!: Subscription;
-
+    sortPopular: boolean = false;
     page!: number; //current page
     //current page
     limit!: number; //page limit
@@ -62,7 +62,7 @@ export class HomeComponent implements OnInit {
         this.order = 'asc';
         this.errorMessage = null;
         this.buttonArray = [1, 2, 3];
-        this.dataSub = this.postService.getPosts().subscribe(
+        this.dataSub = this.postService.getPosts(this.sortPopular).subscribe(
             data => {
                 console.log(data);
                 //subscribe to server's response
@@ -83,8 +83,9 @@ export class HomeComponent implements OnInit {
 
     getData() {
         this.end = Math.ceil(this.size / this.limit); //calculate last page
+        let test: boolean = true;
         //if the url seems complicated, read the documentation of json-server on github
-        this.dataSub = this.postService.getPosts(this.page).subscribe(
+        this.dataSub = this.postService.getPosts(this.sortPopular, this.page, this.limit).subscribe(
             data => {
                 //subscribe to server's response
                 this.postsData = data; //assign server's response to a variable
@@ -138,6 +139,10 @@ export class HomeComponent implements OnInit {
         this.dataSub.unsubscribe();
     }
 
+    handleSort() {
+        this.sortPopular = !this.sortPopular;
+        this.getData();
+    }
     toggleModalPost() {
         this.modalService.handleOpen1();
         // console.log(this.modalService.getModalValue);

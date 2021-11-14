@@ -39,7 +39,6 @@ export class PostDialogComponent implements OnInit {
         this.showModal$ = this.modalService.getModalValue1;
         this.showModal$.subscribe(res => (this.showModal = res));
         // this.showModal.
-        console.log(this.showModal);
     }
     toggleModal() {
         this.modalService.handleOpen1();
@@ -57,10 +56,10 @@ export class PostDialogComponent implements OnInit {
         postData.desc = this.postForm.get('post')!.value;
         postData.userId = this.authService.currentUserValue.id;
         postData.username = this.authService.currentUserValue.username;
-        postData.created_at = this.datePipe.transform(new Date(), 'MM-dd hh mm ss')!;
+        postData.created_at = this.datePipe.transform(new Date(), 'M/d/yy, h:mm a')!;
 
         this.postService.createPost(postData).subscribe(
-            res => console.log(res),
+            res => this.modalService.handleOpen1(),
             err => console.log(err),
         );
     }

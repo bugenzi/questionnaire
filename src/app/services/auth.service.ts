@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { Ilogin } from '../models/login.model';
 import { Register } from '../models/register';
 import { IRegister } from '../models/register.model';
@@ -14,7 +15,7 @@ export class AuthService {
     private currentUserSubject: BehaviorSubject<User>;
     public currentUser!: Observable<User>;
 
-    private REST_API_SERVER = 'http://localhost:3000';
+    private REST_API_SERVER = environment.REST_API_SERVER;
 
     constructor(private httpClient: HttpClient) {
         this.currentUserSubject = new BehaviorSubject<User>(

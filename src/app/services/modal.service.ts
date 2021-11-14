@@ -3,7 +3,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class ModalService {
-    private modals: any[] = [];
     isOpenSubject1$ = new BehaviorSubject<boolean>(false);
     isOpen1$!: Observable<boolean>;
     isOpenSubject2$ = new BehaviorSubject<boolean>(false);
@@ -19,10 +18,13 @@ export class ModalService {
         this.isOpenSubject1$.next(!this.isOpenSubject1$.value);
     }
     handleOpen2() {
-        this.isOpenSubject1$.next(!this.isOpenSubject1$.value);
+        this.isOpenSubject2$.next(!this.isOpenSubject2$.value);
     }
 
     get getModalValue1(): Observable<boolean> {
         return this.isOpenSubject1$;
+    }
+    get getModalValue2(): Observable<boolean> {
+        return this.isOpenSubject2$;
     }
 }
