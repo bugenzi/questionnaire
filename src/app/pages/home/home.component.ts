@@ -1,6 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { User } from 'src/app/models/user.model';
+import { AuthService } from 'src/app/services/auth.service';
+import { ModalService } from 'src/app/services/modal.service';
 import { PostService } from 'src/app/services/post.service';
 
 @Component({
@@ -9,6 +12,8 @@ import { PostService } from 'src/app/services/post.service';
     styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+    isLoggedIn$!: Observable<User>;
+    user!: User;
     sizeSub!: Subscription; //variables for managing subscriptions
     dataSub!: Subscription;
 
@@ -39,9 +44,18 @@ export class HomeComponent implements OnInit {
     buttonArray!: Array<number>; //button values for pagination
     //button values for pagination
 
-    constructor(private http: HttpClient, private postService: PostService) {}
+    constructor(
+        private http: HttpClient,
+        private postService: PostService,
+        private modalService: ModalService,
+        private authService: AuthService,
+    ) {}
 
     ngOnInit() {
+        this.isLoggedIn$ = this.authService.currentUser;
+        this.isLoggedIn$.subscribe(() => {
+            this.user = this.authService.currentUserValue;
+        });
         this.page = 1; //initialize variables
         this.limit = 20;
         this.sort = 'id';
@@ -50,6 +64,7 @@ export class HomeComponent implements OnInit {
         this.buttonArray = [1, 2, 3];
         this.dataSub = this.postService.getPosts().subscribe(
             data => {
+                console.log(data);
                 //subscribe to server's response
                 this.postsData = data; //assign server's response to a variable
                 this.noData = false;
@@ -64,11 +79,9 @@ export class HomeComponent implements OnInit {
             data => (this.size = data.lenght),
             err => console.log(err),
         );
-        console.log(this.size);
     }
 
     getData() {
-        console.log(this.size, this.limit);
         this.end = Math.ceil(this.size / this.limit); //calculate last page
         //if the url seems complicated, read the documentation of json-server on github
         this.dataSub = this.postService.getPosts(this.page).subscribe(
@@ -123,5 +136,10 @@ export class HomeComponent implements OnInit {
     ngOnDestroy() {
         this.sizeSub.unsubscribe(); //end subscriptions
         this.dataSub.unsubscribe();
+    }
+
+    toggleModalPost() {
+        this.modalService.handleOpen1();
+        // console.log(this.modalService.getModalValue);
     }
 }

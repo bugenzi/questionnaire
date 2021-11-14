@@ -37,9 +37,8 @@ export class PostService {
     createPost(postData: Ipost) {
         let post = new Post();
         post = postData;
-        this.httpClient
-            .post(this.REST_API_SERVER + '/posts', postData)
-            .pipe(catchError(err => 'error'));
+        console.log(post);
+        return this.httpClient.post(this.REST_API_SERVER + '/posts', postData);
     }
     getPostById(id: string | number, byUser: boolean = false) {
         let params = new HttpParams();
@@ -64,11 +63,19 @@ export class PostService {
         //     return err;
         // })
     }
+    handlePostLike(id: number, points: number) {
+        return this.httpClient.patch(
+            `${this.REST_API_SERVER}/posts/${id}`,
+            { points },
+            {
+                responseType: 'json',
+            },
+        );
+    }
+
     postComment(commentData: any) {
         return this.httpClient.post(`${this.REST_API_SERVER}/comments`, commentData).pipe(
-            map(res => {
-                console.log('REEE', res);
-            }),
+            map(res => {}),
             catchError(err => {
                 console.log(err);
                 return err;

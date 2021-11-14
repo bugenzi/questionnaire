@@ -1,0 +1,125 @@
+<!-- This example requires Tailwind CSS v2.0+ -->
+<div *ngIf="showModal" class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog"
+    aria-modal="true">
+    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <!--
+        Background overlay, show/hide based on modal state.
+  
+        Entering: "ease-out duration-300"
+          From: "opacity-0"
+          To: "opacity-100"
+        Leaving: "ease-in duration-200"
+          From: "opacity-100"
+          To: "opacity-0"
+      -->
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+
+        <!-- This element is to trick the browser into centering the modal contents. -->
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+        <!--
+        Modal panel, show/hide based on modal state.
+  
+        Entering: "ease-out duration-300"
+          From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+          To: "opacity-100 translate-y-0 sm:scale-100"
+        Leaving: "ease-in duration-200"
+          From: "opacity-100 translate-y-0 sm:scale-100"
+          To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+      -->
+        <form [formGroup]="postForm" (submit)="onSubmit()"
+            class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+
+
+
+            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+
+
+
+                <!-- 
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+                            Username
+                        </label>
+                        <input
+                            formControlName="username"
+                            class="
+                                shadow
+                                appearance-none
+                                border
+                                rounded
+                                w-full
+                                py-2
+                                px-3
+                                text-gray-700
+                                leading-tight
+                                focus:outline-none focus:shadow-outline
+                            "
+                            id="username"
+                            type="text"
+                            placeholder="Username"
+                        />
+                    </div> -->
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="title"> Title </label>
+                    <input formControlName="title" class="
+                        {{title.invalid?' border-red-500':'border-green-500'}}
+                                shadow
+                                appearance-none
+                                border
+                                rounded
+                                w-full
+                                py-2
+                                px-3
+                                text-gray-700
+                              
+                                leading-tight
+                                focus:outline-none focus:shadow-outline
+                            " id="title" type="text" placeholder="What is the meaning of life " />
+                    <p *ngIf="title.invalid" class="text-red-500 text-xs italic">Title is empty</p>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="descritpion">
+                        Description</label>
+                    <textarea formControlName="post" rows="3" placeholder="Write an answer..."
+                        class="border p-2 rounded w-full"></textarea>
+                    <p *ngIf="post.invalid" class="text-red-500 text-xs italic">You need to describe the question
+                        credentials
+                    </p>
+                    <p class="text-red-500 text-xs italic" *ngIf="post.hasError('minlength')">
+                        The minimum length for this field is {{post.errors!.minlength.requiredLength}}
+                        characters.
+                    </p>
+                    <p class="text-red-500 text-xs italic" *ngIf="post.hasError('maxlength')">
+                        The maximum length for this field is {{post.errors!.maxlength.requiredLength}}
+                        characters.
+                    </p>
+                </div>
+            </div>
+            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <button [disabled]="postForm.invalid" class="
+                                          disabled:opacity-50
+                                    bg-green-400
+                                            hover:bg-green-90000
+                                            text-white
+                                            font-bold
+                                            py-2
+                                            px-4
+                                            rounded
+                                            focus:outline-none focus:shadow-outline
+                                        " type="submit">
+                    Post question.
+                </button>
+                <button (click)="toggleModal()" type="button"
+                    class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                    Cancel
+                </button>
+            </div>
+
+
+
+        </form>
+    </div>
+
+</div>

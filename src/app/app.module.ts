@@ -6,22 +6,27 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './component/navbar/navbar.component';
+import { NotificationComponent } from './component/notification/notification.component';
 import { PostCardComponent } from './component/post-card/post-card.component';
+import { PostDialogComponent } from './component/post-dialog/post-dialog.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { PostComponent } from './pages/post/post.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { RegisterComponent } from './pages/register/register.component';
+
 @NgModule({
     declarations: [
         AppComponent,
         NavbarComponent,
-        PostCardComponent,
+        PostDialogComponent,
         RegisterComponent,
         LoginComponent,
         HomeComponent,
         PostComponent,
         ProfileComponent,
+        NotificationComponent,
+        PostCardComponent,
         // DataService,
     ],
     imports: [

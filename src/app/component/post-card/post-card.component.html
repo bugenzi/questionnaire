@@ -1,136 +1,51 @@
-<!-- This example requires Tailwind CSS v2.0+ -->
-<div class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <!--
-        Background overlay, show/hide based on modal state.
-  
-        Entering: "ease-out duration-300"
-          From: "opacity-0"
-          To: "opacity-100"
-        Leaving: "ease-in duration-200"
-          From: "opacity-100"
-          To: "opacity-0"
-      -->
-        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+<div class="
+            flex
+            mr-5
+            mb-5
+            border border-grey-light-alt
+            hover:border-grey
+            rounded
+            bg-white
+            cursor-pointer
+        ">
+    <div class=" w-1/12 flex flex-col text-center pt-2">
+        <button (click)="handleLike()" [disabled]="likeActive" class="text-xs  disabled:opacity-50">
+            <svg class="w-5 fill-current text-green-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                <path d="M7 10v8h6v-8h5l-8-8-8 8h5z"></path>
+            </svg>
+        </button>
+        <span class="text-xs font-semibold my-1">{{points}}</span>
+        <button [disabled]="dislikeActive" (click)="handleDislike()" class="text-xs  disabled:opacity-50 ">
+            <svg class="w-5 fill-current text-red-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                <path d="M7 10V2h6v8h5l-8 8-8-8h5z"></path>
+            </svg>
+        </button>
+    </div>
 
-        <!-- This element is to trick the browser into centering the modal contents. -->
-        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+    <div class=" w-11/12 pt-2">
+        <div class="flex items-center text-xs mb-2">
+            <a class="font-semibold no-underline hover:underline text-black flex items-center">
+            </a>
+            <span class="text-grey-light mx-1 text-xxs">•</span>
+            <span class="text-base text-gray-700">Posted by</span>
+            <a [routerLink]="['/profile', userId]" class="text-green-400 text-base mx-1 no-underline hover:underline">{{
+                username }}
+            </a>
+        </div>
+        <div [routerLink]="['/post', id]">
+            <h2 class=" text-lg text-green-800 font-medium mb-1">{{ title }}</h2>
+            <h3 class="font-medium mb-1">
+                {{ desc }}
+            </h3>
+        </div>
+        <div class="inline-flex items-center my-1">
+            <div class="flex hover:bg-green-lighter p-1">
 
-        <!--
-        Modal panel, show/hide based on modal state.
-  
-        Entering: "ease-out duration-300"
-          From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-          To: "opacity-100 translate-y-0 sm:scale-100"
-        Leaving: "ease-in duration-200"
-          From: "opacity-100 translate-y-0 sm:scale-100"
-          To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-      -->
-        <div
-            class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-
-                <form [formGroup]="postForm" (submit)="onSubmit()"
-                    class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-
-                    <!-- 
-                    <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
-                            Username
-                        </label>
-                        <input
-                            formControlName="username"
-                            class="
-                                shadow
-                                appearance-none
-                                border
-                                rounded
-                                w-full
-                                py-2
-                                px-3
-                                text-gray-700
-                                leading-tight
-                                focus:outline-none focus:shadow-outline
-                            "
-                            id="username"
-                            type="text"
-                            placeholder="Username"
-                        />
-                    </div> -->
-                    <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="title"> Title </label>
-                        <input formControlName="title" class="
-                        {{title.invalid?' border-red-500':'border-green-500'}}
-                                shadow
-                                appearance-none
-                                border
-                                rounded
-                                w-full
-                                py-2
-                                px-3
-                                text-gray-700
-                              
-                                leading-tight
-                                focus:outline-none focus:shadow-outline
-                            " id="title" type="text" placeholder="What is the meaning of life " />
-                        <p *ngIf="title.invalid" class="text-red-500 text-xs italic">Title is empty</p>
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="descritpion">
-                            Description</label>
-                        <textarea formControlName="post" rows="3" placeholder="Write an answer..."
-                            class="border p-2 rounded w-full"></textarea>
-                        <p *ngIf="post.invalid" class="text-red-500 text-xs italic">You need to describe the question
-                            credentials
-                        </p>
-                        <p class="text-red-500 text-xs italic" *ngIf="post.hasError('minlength')">
-                            The minimum length for this field is {{post.errors!.minlength.requiredLength}}
-                            characters.
-                        </p>
-                        <p class="text-red-500 text-xs italic" *ngIf="post.hasError('maxlength')">
-                            The maximum length for this field is {{post.errors!.maxlength.requiredLength}}
-                            characters.
-                        </p>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <button [disabled]="postForm.invalid" class="
-                              disabled:opacity-50
-                        bg-green-400
-                                hover:bg-green-90000
-                                text-white
-                                font-bold
-                                py-2
-                                px-4
-                                rounded
-                                focus:outline-none focus:shadow-outline
-                            " type="submit">
-                            Log In
-                        </button>
-                        <a routerLink="/register" class="
-                                inline-block
-                                align-baseline
-                                font-bold
-                                text-sm
-                                outline-fancyBlack
-                                text-gray-800
-                                hover:text-green-600
-                            " href="#">
-                            Dont have an accout
-                        </a>
-                    </div>
-                </form>
-            </div>
-            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                <button type="button"
-                    class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
-                    Deactivate
-                </button>
-                <button type="button"
-                    class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
-                    Cancel
-                </button>
+                <span class="ml-2 text-green-400 text-xs font-semibold text-grey">{{created_at}}
+                    Date</span>
             </div>
         </div>
+
     </div>
+
 </div>

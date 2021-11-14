@@ -24,6 +24,7 @@ export class ProfileComponent implements OnInit {
         } else {
             let id = this.router.snapshot.paramMap.get('id');
             this.authService.getUserById(id!).subscribe(res => (this.user = res[0]));
+            this.postService.getPostById(id!, true).subscribe(res => (this.posts = res));
         }
     }
 

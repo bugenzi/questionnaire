@@ -48,7 +48,7 @@ export class NavbarComponent implements OnInit {
         }
     }
 
-    toggleModal() {
+    toggleModalNotifications() {
         this.showModal = !this.showModal;
     }
 }

@@ -1,5 +1,13 @@
-<div class="backdrop-grayscale mt-5">
-    <app-post-card></app-post-card>
+<div class="backdrop-grayscale min-w-full  m-auto mt-5">
+    <button *ngIf="(isLoggedIn$ | async) !== null;" (click)="toggleModalPost()" class=" flex p-1 pl-5 pr-5 bg-green-400 border-2 border-green-500 text-fancyBlack text-lg rounded-lg
+        transition-colors duration-700 transform hover:bg-fancyBlack hover:text-green-500 focus:border-4
+        focus:border-green-300"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor" class="h-6 w-6">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4">
+            </path>
+        </svg> Post </button>
+
+    <app-post-modal></app-post-modal>
     <!-- <a *ngIf="sort != 'id'" href="javascript:void(0)" (click)="changeSorting('id', 'asc')"> ID </a>
     <a
         *ngIf="sort == 'id' && order == 'asc'"
@@ -87,17 +95,20 @@
     </div>
 
     <div *ngFor="let post of postsData">
-        <div class="
-            flex
-            mr-5
-            mb-5
-            border border-grey-light-alt
-            hover:border-grey
-            rounded
-            bg-white
-            cursor-pointer
-        " [routerLink]="['/post', post.id]">
-            <div class="w-1/12 flex flex-col text-center pt-2"></div>
+
+        <!-- <div class="w-1/12 flex flex-col text-center pt-2">
+                <button class="text-xs">
+                    <svg class="w-5 fill-current text-grey" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M7 10v8h6v-8h5l-8-8-8 8h5z"></path>
+                    </svg>
+                </button>
+                <span class="text-xs font-semibold my-1">20k</span>
+                <button class="text-xs">
+                    <svg class="w-5 fill-current text-grey" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M7 10V2h6v8h5l-8 8-8-8h5z"></path>
+                    </svg>
+                </button>
+            </div>
             <div class=" w-11/12 pt-2">
                 <div class="flex items-center text-xs mb-2">
                     <a class="font-semibold no-underline hover:underline text-black flex items-center">
@@ -126,8 +137,13 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
+        <app-post-card [title]="post.title" [desc]="post.desc" [username]="post.username" [created_at]="post.created_at"
+            [userId]="post.userId" [points]="post.points" [id]="post.id">
+        </app-post-card>
     </div>
+
+
 
     <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
         <button class="
@@ -191,4 +207,5 @@
             </svg>
         </button>
     </nav>
+
 </div>

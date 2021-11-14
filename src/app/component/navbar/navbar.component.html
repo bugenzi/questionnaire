@@ -110,27 +110,7 @@
             <!-- Auth navbar -->
             <ng-template #loggedOut class="{{ isToggled ? 'flex' : 'flex flex-col-reverse' }}
                 flex-col md:flex md:flex-row-reverse md:mx-6">
-                <button class="
-                        flex
-                        p-1
-                        pl-5
-                        pr-5
-                        bg-green-400
-                        border-2 border-green-500
-                        text-fancyBlack text-lg
-                        rounded-lg
-                        transition-colors
-                        duration-700
-                        transform
-                        hover:bg-fancyBlack hover:text-green-500
-                        focus:border-4 focus:border-green-300
-                    ">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                    </svg>
-                    Post
-                </button>
+
 
                 <a routerLink="" class="
                         my-1
@@ -215,7 +195,7 @@
                         transform
                         hover:bg-fancyBlack hover:text-green-500
                         focus:border-4 focus:border-green-300
-                    " type="button" (click)="toggleModal()">
+                    " type="button" (click)="toggleModalNotifications()">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

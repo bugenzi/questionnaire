@@ -1,9 +1,5 @@
-import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Post } from 'src/app/models/post';
-import { AuthService } from 'src/app/services/auth.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { PostService } from 'src/app/services/post.service';
 
 @Component({
     selector: 'app-post-card',
@@ -11,46 +7,57 @@ import { AuthService } from 'src/app/services/auth.service';
     styleUrls: ['./post-card.component.scss'],
 })
 export class PostCardComponent implements OnInit {
-    showModal: boolean = true;
-    postForm!: FormGroup;
-    constructor(
-        private fb: FormBuilder,
-        private authService: AuthService,
-        private router: Router,
-        private datePipe: DatePipe,
-    ) {}
+    @Input()
+    desc: string = '';
 
-    ngOnInit(): void {
-        this.postForm = new FormGroup({
-            title: new FormControl(null, [
-                Validators.required,
-                Validators.minLength(6),
-                Validators.maxLength(12),
-            ]),
-            post: new FormControl(null, [
-                Validators.required,
-                Validators.minLength(6),
-                Validators.maxLength(12),
-            ]),
-        });
+    @Input()
+    title: string = '';
+
+    @Input()
+    username: string = '';
+
+    @Input()
+    points!: number;
+
+    @Input()
+    created_at: string = '';
+
+    @Input()
+    userId: string = '';
+
+    @Input()
+    id!: number;
+
+    like = this.points;
+    likeActive: boolean = false;
+    dislikeActive: boolean = false;
+    constructor(private postService: PostService) {}
+    setDislike() {
+        this.dislikeActive = !this.dislikeActive;
+        this.points = this.dislikeActive ? this.points - 1 : this.points + 1;
+        this.postService.handlePostLike(this.id, this.points).subscribe(res => console.log(res));
     }
-    toggleModal() {
-        this.showModal = !this.showModal;
+    setLike() {
+        this.likeActive = !this.likeActive;
+        this.points = this.likeActive ? this.points + 1 : this.points - 1;
+        this.postService.handlePostLike(this.id, this.points).subscribe(res => console.log(res));
     }
 
-    get title() {
-        return this.postForm.get('title')!;
+    handleLike() {
+        if (this.dislikeActive) {
+            this.setLike();
+            this.setDislike();
+        }
+        this.setLike();
     }
-    get post() {
-        return this.postForm.get('post')!;
-    }
-    onSubmit() {
-        let postData = new Post();
-        postData.title = this.postForm.get('title')!.value;
-        postData.desc = this.postForm.get('desc')!.value;
-        postData.id = this.authService.currentUserValue.id;
-        postData.created_at = this.datePipe.transform(new Date(), 'MM-dd hh mm ss')!;
 
-        console.log(this.postForm.value);
+    handleDislike() {
+        if (this.likeActive) {
+            this.setDislike();
+            this.setLike();
+        }
+        this.setDislike();
     }
+
+    ngOnInit(): void {}
 }
