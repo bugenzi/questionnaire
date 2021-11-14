@@ -2,13 +2,14 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { Post } from '../models/post';
 import { Ipost } from '../models/post.model';
 @Injectable({
     providedIn: 'root',
 })
 export class PostService {
-    private REST_API_SERVER = 'http://localhost:3000';
+    private REST_API_SERVER = environment.REST_API_SERVER;
     // public currentComments$!: BehaviorSubject<any>;
 
     constructor(private httpClient: HttpClient) {}
