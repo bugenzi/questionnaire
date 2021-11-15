@@ -61,8 +61,6 @@ export class HomeComponent implements OnInit {
                 this.errorMessage = '';
             },
             error => {
-                console.log(error);
-
                 this.connectionErrorHandler(); //call function connectionErrorHandler
             },
         );

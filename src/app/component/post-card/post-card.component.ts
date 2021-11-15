@@ -46,6 +46,7 @@ export class PostCardComponent implements OnInit {
         private datePipe: DatePipe,
         private notificationService: NotificationService,
     ) {}
+
     ngOnInit(): void {
         this.isLoggedIn$ = this.authService.currentUser;
         this.authUser = this.authService.currentUserValue;
@@ -73,7 +74,7 @@ export class PostCardComponent implements OnInit {
         this.setLike();
         this.notificationData.created_at = this.datePipe.transform(new Date(), 'M/d/yy, h:mm a')!;
         this.notificationData.message = `${this.authService.currentUserValue.username} has liked your question`;
-        this.notificationService.saveNotification(this.notificationData).subscribe();
+        this.notificationService.saveNotification(this.notificationData);
     }
 
     handleDislike() {
@@ -84,6 +85,6 @@ export class PostCardComponent implements OnInit {
         this.setDislike();
         this.notificationData.created_at = this.datePipe.transform(new Date(), 'M/d/yy, h:mm a')!;
         this.notificationData.message = `${this.authService.currentUserValue.username} has disliked your question`;
-        this.notificationService.saveNotification(this.notificationData).subscribe();
+        this.notificationService.saveNotification(this.notificationData);
     }
 }

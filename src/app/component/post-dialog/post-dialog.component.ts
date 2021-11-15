@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Post } from 'src/app/models/post';
 import { AuthService } from 'src/app/services/auth.service';
@@ -21,6 +22,7 @@ export class PostDialogComponent implements OnInit {
         private datePipe: DatePipe,
         private postService: PostService,
         private modalService: ModalService,
+        private router: Router,
     ) {}
 
     ngOnInit(): void {
@@ -58,6 +60,8 @@ export class PostDialogComponent implements OnInit {
         postData.username = this.authService.currentUserValue.username;
         postData.created_at = this.datePipe.transform(new Date(), 'M/d/yy, h:mm a')!;
 
-        this.postService.createPost(postData).subscribe(res => this.modalService.handleOpen1());
+        this.postService.createPost(postData).subscribe(res => {
+            this.modalService.handleOpen1();
+        });
     }
 }

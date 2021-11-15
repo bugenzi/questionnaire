@@ -74,7 +74,7 @@ export class CommentCardComponent implements OnInit {
         this.setLike();
         this.notificationData.created_at = this.datePipe.transform(new Date(), 'M/d/yy, h:mm a')!;
         this.notificationData.message = `${this.authService.currentUserValue.username} has liked your answer`;
-        this.notificationService.saveNotification(this.notificationData).subscribe();
+        this.notificationService.saveNotification(this.notificationData);
     }
 
     handleDislike() {
@@ -85,6 +85,6 @@ export class CommentCardComponent implements OnInit {
         this.setDislike();
         this.notificationData.created_at = this.datePipe.transform(new Date(), 'M/d/yy, h:mm a')!;
         this.notificationData.message = `${this.authService.currentUserValue.username} has disliked your answer`;
-        this.notificationService.saveNotification(this.notificationData).subscribe();
+        this.notificationService.saveNotification(this.notificationData);
     }
 }

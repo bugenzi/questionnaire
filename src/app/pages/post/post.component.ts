@@ -65,7 +65,7 @@ export class PostComponent implements OnInit {
         (notificationData.sender = this.user.username),
             (notificationData.message = `${notificationData.sender} wrote an answer on your post`);
         this.postService.postComment(commentData).subscribe(res => {
-            this.notificationService.saveNotification(notificationData).subscribe();
+            this.notificationService.saveNotification(notificationData);
             this.getComments();
         });
     }

@@ -31,7 +31,6 @@ export class AuthService {
 
         registerData = { ...userRegister, posts: [] };
         return this.httpClient.post(this.REST_API_SERVER + '/user', registerData);
-        // .pipe(catchError(async err => console.log(err)));
     }
 
     login(loginCred: any) {
@@ -51,7 +50,6 @@ export class AuthService {
 
                 return user;
             }),
-            // catchError(async err => console.log(err)),
         );
     }
     getUserById(id: string) {

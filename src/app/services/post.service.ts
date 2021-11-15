@@ -20,7 +20,7 @@ export class PostService {
             params = params.append('_order', 'desc');
         } else if (!isPopular) {
             params = params.append('_sort', 'created_at');
-            params = params.append('_order', 'asc');
+            params = params.append('_order', 'desc');
         }
         params = params.append('_page', page ? page : 1);
         params = params.append('_limit', limit ? limit : 20);

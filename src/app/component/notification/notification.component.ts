@@ -19,15 +19,17 @@ export class NotificationComponent implements OnInit {
         private modalService: ModalService,
         private notificationService: NotificationService,
         private authService: AuthService,
-    ) {}
+    ) {
+        this.notificationService.notification$.subscribe((res: []) => {
+            this.notifications = res;
+        });
+    }
 
     ngOnInit(): void {
         this.showModal2$ = this.modalService.getModalValue2;
         this.showModal2$.subscribe(res => (this.showModal = res));
         this.userID = this.authService.currentUserValue.id;
-        this.notificationService.getNotifications(this.userID).subscribe(res => {
-            this.notifications = res;
-        });
+        this.notificationService.getNotifications(this.userID);
     }
 
     toggleModal() {

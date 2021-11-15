@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { ModalService } from 'src/app/services/modal.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
     selector: 'app-navbar',
@@ -14,13 +15,21 @@ export class NavbarComponent implements OnInit {
     isLoggedIn$!: Observable<User>;
     user!: User;
     showModal = false;
+    notificationCount!: number;
 
-    constructor(private dataService: AuthService, private modalService: ModalService) {}
+    constructor(
+        private dataService: AuthService,
+        private modalService: ModalService,
+        private notificationService: NotificationService,
+    ) {}
 
     ngOnInit(): void {
         this.isLoggedIn$ = this.dataService.currentUser;
         this.isLoggedIn$.subscribe(() => {
             this.user = this.dataService.currentUserValue;
+        });
+        this.notificationService.notification$.subscribe((res: []) => {
+            this.notificationCount = res.length;
         });
     }
     handleLogout() {
@@ -29,13 +38,6 @@ export class NavbarComponent implements OnInit {
     }
 
     showItems() {
-        // if (this.isToggled === true) {
-        //     this.isToggled = false;
-        // } else {
-        //     this.isToggled = true;
-        // }
-        // Needs optimization
-        console.log(this.isToggled);
         this.isToggled = !this.isToggled;
     }
 
