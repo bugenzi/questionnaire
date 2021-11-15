@@ -18,7 +18,7 @@ This is situated in the src folder
 
 ## Links
 
-Here is the link of the [Website](https://froda.vercel.app 'Click the little sucker').
+Here is the link of the [Website](https://froda.vercel.app 'Click the little sucker'). Its hosted on vercel and backend is on heroku 
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.13.
 
