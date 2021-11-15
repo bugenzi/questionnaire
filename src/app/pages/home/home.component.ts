@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { User } from 'src/app/models/user.model';
@@ -31,7 +30,6 @@ export class HomeComponent implements OnInit {
     buttonArray!: Array<number>;
 
     constructor(
-        private http: HttpClient,
         private postService: PostService,
         private modalService: ModalService,
         private authService: AuthService,

@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 import { Comments } from 'src/app/models/comment';
 import { Notification } from 'src/app/models/notification';
 import { Post } from 'src/app/models/post';
@@ -19,6 +20,7 @@ export class PostComponent implements OnInit {
     id!: string | null;
     post!: Post;
     user!: User;
+    isLoggedIn$!: Observable<User>;
     commentForm!: FormGroup;
     comments!: any;
     constructor(
@@ -32,6 +34,7 @@ export class PostComponent implements OnInit {
 
     ngOnInit(): void {
         this.id = this.router.snapshot.paramMap.get('id');
+        this.isLoggedIn$ = this.authService.currentUser;
         this.user = this.authService.currentUserValue;
         this.postService.getPostById(this.id!).subscribe((data: any) => {
             this.post = data[0];
@@ -67,6 +70,7 @@ export class PostComponent implements OnInit {
         this.postService.postComment(commentData).subscribe(res => {
             this.notificationService.saveNotification(notificationData);
             this.getComments();
+            this.commentForm.reset();
         });
     }
     get comment() {
