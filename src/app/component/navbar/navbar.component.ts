@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -8,9 +8,6 @@ import { ModalService } from 'src/app/services/modal.service';
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
     styleUrls: ['./navbar.component.scss'],
-    host: {
-        '(document:click)': 'showItems($event)',
-    },
 })
 export class NavbarComponent implements OnInit {
     isToggled: boolean = true;
@@ -18,11 +15,7 @@ export class NavbarComponent implements OnInit {
     user!: User;
     showModal = false;
 
-    constructor(
-        private _eref: ElementRef,
-        private dataService: AuthService,
-        private modalService: ModalService,
-    ) {}
+    constructor(private dataService: AuthService, private modalService: ModalService) {}
 
     ngOnInit(): void {
         this.isLoggedIn$ = this.dataService.currentUser;
@@ -35,15 +28,15 @@ export class NavbarComponent implements OnInit {
         this.ngOnInit();
     }
 
-    showItems(event?: Event) {
+    showItems() {
+        // if (this.isToggled === true) {
+        //     this.isToggled = false;
+        // } else {
+        //     this.isToggled = true;
+        // }
         // Needs optimization
-        let eventListiner = this._eref.nativeElement.contains(event?.target);
-
-        if (eventListiner) {
-            this.isToggled = !this.isToggled;
-        } else if (!eventListiner) {
-            this.isToggled = false;
-        }
+        console.log(this.isToggled);
+        this.isToggled = !this.isToggled;
     }
 
     toggleModalNotifications() {
