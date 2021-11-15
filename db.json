@@ -562,7 +562,8 @@
       "id": 94,
       "username": "Cody",
       "title": "He Died With a Felafel in His Hand",
-      "desc": "Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.\n\nQuisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus."
+      "desc": "Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.\n\nQuisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.",
+      "points": null
     },
     {
       "id": 95,
@@ -662,6 +663,15 @@
       "username": "amarbuga",
       "created_at": "11-14 01 15 40",
       "id": 107
+    },
+    {
+      "points": 0,
+      "title": "tesaddd",
+      "desc": "asddddd",
+      "userId": 8,
+      "username": "amarbuga",
+      "created_at": "11/15/21, 2:06 AM",
+      "id": 108
     }
   ],
   "comments": [

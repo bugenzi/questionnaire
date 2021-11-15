@@ -29,7 +29,10 @@ export class PostService {
             .get(this.REST_API_SERVER + '/posts', { responseType: 'json', params })
             .pipe(
                 tap(_ => this.log('fetched posts')),
-                catchError(err => 'error'),
+                catchError(err => {
+                    console.log(err);
+                    return err;
+                }),
             );
     }
     getAllPosts(): Observable<any> {

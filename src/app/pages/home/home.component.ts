@@ -14,35 +14,21 @@ import { PostService } from 'src/app/services/post.service';
 export class HomeComponent implements OnInit {
     isLoggedIn$!: Observable<User>;
     user!: User;
-    sizeSub!: Subscription; //variables for managing subscriptions
+    postsData: any;
+    sizeSub!: Subscription;
     dataSub!: Subscription;
-    sortPopular: boolean = false;
-    page!: number; //current page
-    //current page
-    limit!: number; //page limit
-    //page limit
-    //page limit
-    sort!: string; //property by which table is sorted
-    //property by which table is sorted
-    //property by which table is sorted
-    order!: string; //ascending or descending order
-    //ascending or descending order
-    //ascending or descending order
-    end!: number; //last page
-    //last page
+    sortPopular!: boolean;
+    page!: number;
+    limit!: number;
 
-    //last page
+    order!: string;
+    end!: number;
     errorMessage!: string | null; //error message
     //error message
 
-    size!: number; //total data size
-    postsData: Array<any> = []; //data displayed in table
-    noData!: boolean; //true if empty table
-    //true if empty table
-
-    //true if empty table
-    buttonArray!: Array<number>; //button values for pagination
-    //button values for pagination
+    size!: number;
+    noData!: boolean;
+    buttonArray!: Array<number>;
 
     constructor(
         private http: HttpClient,
@@ -52,47 +38,31 @@ export class HomeComponent implements OnInit {
     ) {}
 
     ngOnInit() {
+        this.sortPopular = false;
+        this.page = 1; //initialize variables
+        this.limit = 20;
+        this.errorMessage = null;
+        this.buttonArray = [1, 2, 3];
+
+        this.getData();
         this.isLoggedIn$ = this.authService.currentUser;
         this.isLoggedIn$.subscribe(() => {
             this.user = this.authService.currentUserValue;
         });
-        this.page = 1; //initialize variables
-        this.limit = 20;
-        this.sort = 'id';
-        this.order = 'asc';
-        this.errorMessage = null;
-        this.buttonArray = [1, 2, 3];
-        this.dataSub = this.postService.getPosts(this.sortPopular).subscribe(
-            data => {
-                //subscribe to server's response
-                this.postsData = data; //assign server's response to a variable
-                this.noData = false;
-                this.errorMessage = ''; //no error occured, so there is no error message
-            },
-            error => {
-                //in case of error
-                this.connectionErrorHandler(); //call function connectionErrorHandler
-            },
-        );
-        this.sizeSub = this.postService.getAllPosts().subscribe(
-            data => (this.size = data.lenght),
-            err => alert(err),
-        );
     }
 
     getData() {
         this.end = Math.ceil(this.size / this.limit); //calculate last page
-        let test: boolean = true;
-        //if the url seems complicated, read the documentation of json-server on github
+
         this.dataSub = this.postService.getPosts(this.sortPopular, this.page, this.limit).subscribe(
             data => {
-                //subscribe to server's response
-                this.postsData = data; //assign server's response to a variable
+                this.postsData = data;
                 this.noData = false;
-                this.errorMessage = ''; //no error occured, so there is no error message
+                this.errorMessage = '';
             },
             error => {
-                //in case of error
+                console.log(error);
+
                 this.connectionErrorHandler(); //call function connectionErrorHandler
             },
         );
@@ -120,22 +90,10 @@ export class HomeComponent implements OnInit {
         this.getData(); //call function getData
     }
 
-    changeSorting(column: string, order: string) {
-        this.sort = column; //refresh variables
-        this.order = order;
-
-        this.getData(); //call function getData
-    }
-
     connectionErrorHandler() {
         this.postsData = []; //no data to display
         this.noData = true;
         this.errorMessage = 'Probably json-server isnt running'; //display error message
-    }
-
-    ngOnDestroy() {
-        this.sizeSub.unsubscribe(); //end subscriptions
-        this.dataSub.unsubscribe();
     }
 
     handleSort() {
