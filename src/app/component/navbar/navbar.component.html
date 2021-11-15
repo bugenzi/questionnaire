@@ -36,7 +36,7 @@
 
         <div class="items-center md:flex">
             <div *ngIf="(isLoggedIn$ | async) === null; else loggedOut" class="{{ isToggled ? 'flex' : 'hidden' }}
-                flex-col md:flex md:flex-row md:mx-6
+                flex-col md:flex md:flex-row md:mx-6 items-center
  ">
                 <a routerLink="" class="
                         my-1
@@ -92,18 +92,7 @@
                     </svg>
                     Login</a>
 
-                <!-- <a
-                    class="
-                        my-1
-                        text-gray-700
-                        dark:text-gray-200
-                        hover:text-indigo-500
-                        dark:hover:text-indigo-400
-                        md:mx-4 md:my-0
-                    "
-                    href="#"
-                    >Register</a
-                > -->
+
             </div>
 
 

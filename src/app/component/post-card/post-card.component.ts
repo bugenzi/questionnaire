@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { Notification } from 'src/app/models/notification';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
-import { ModalService } from 'src/app/services/modal.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { PostService } from 'src/app/services/post.service';
 
@@ -43,7 +42,6 @@ export class PostCardComponent implements OnInit {
 
     constructor(
         private postService: PostService,
-        private modalService: ModalService,
         private authService: AuthService,
         private datePipe: DatePipe,
         private notificationService: NotificationService,
