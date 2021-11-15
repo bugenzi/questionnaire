@@ -46,7 +46,7 @@ export class PostComponent implements OnInit {
                 comment: new FormControl(null, [
                     Validators.required,
                     Validators.minLength(6),
-                    Validators.maxLength(120),
+                    Validators.maxLength(520),
                 ]),
             });
         }
