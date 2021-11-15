@@ -8,7 +8,7 @@
             bg-white
             cursor-pointer
         ">
-    <div class=" w-1/12 flex flex-col text-center pt-2">
+    <div *ngIf="(isLoggedIn$ | async) !== null" class=" w-1/12 flex flex-col text-center pt-2">
         <button (click)="handleLike()" [disabled]="likeActive" class="text-xs  disabled:opacity-50">
             <svg class="w-5 fill-current text-green-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                 <path d="M7 10v8h6v-8h5l-8-8-8 8h5z"></path>

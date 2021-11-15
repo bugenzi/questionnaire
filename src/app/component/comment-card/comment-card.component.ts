@@ -1,6 +1,8 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Notification } from 'src/app/models/notification';
+import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { PostService } from 'src/app/services/post.service';
@@ -36,11 +38,18 @@ export class CommentCardComponent implements OnInit {
         private datePipe: DatePipe,
         private notificationService: NotificationService,
         private authService: AuthService,
-    ) {
-        this.notificationData.sender = this.authService.currentUserValue.username;
-    }
+    ) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.isLoggedIn$ = this.authService.currentUser;
+        this.authUser = this.authService.currentUserValue;
+        if (this.authUser) {
+            this.notificationData.sender = this.authUser.username;
+            this.notificationData.reciverId = this.userId;
+        }
+    }
+    isLoggedIn$!: Observable<User>;
+    authUser!: User;
     notificationData = new Notification();
     like = this.points;
     likeActive: boolean = false;
@@ -63,7 +72,6 @@ export class CommentCardComponent implements OnInit {
             this.setDislike();
         }
         this.setLike();
-        this.notificationData.reciverId = this.userId;
         this.notificationData.created_at = this.datePipe.transform(new Date(), 'M/d/yy, h:mm a')!;
         this.notificationData.message = `${this.authService.currentUserValue.username} has liked your answer`;
         this.notificationService.saveNotification(this.notificationData).subscribe();
@@ -75,7 +83,6 @@ export class CommentCardComponent implements OnInit {
             this.setLike();
         }
         this.setDislike();
-        this.notificationData.reciverId = this.userId;
         this.notificationData.created_at = this.datePipe.transform(new Date(), 'M/d/yy, h:mm a')!;
         this.notificationData.message = `${this.authService.currentUserValue.username} has disliked your answer`;
         this.notificationService.saveNotification(this.notificationData).subscribe();
