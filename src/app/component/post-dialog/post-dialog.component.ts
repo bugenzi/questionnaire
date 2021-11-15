@@ -30,12 +30,12 @@ export class PostDialogComponent implements OnInit {
             title: new FormControl(null, [
                 Validators.required,
                 Validators.minLength(6),
-                Validators.maxLength(30),
+                Validators.maxLength(100),
             ]),
             post: new FormControl(null, [
                 Validators.required,
                 Validators.minLength(6),
-                Validators.maxLength(120),
+                Validators.maxLength(220),
             ]),
         });
         this.showModal$ = this.modalService.getModalValue1;
