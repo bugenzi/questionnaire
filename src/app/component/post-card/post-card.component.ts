@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Notification } from 'src/app/models/notification';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -33,6 +34,7 @@ export class PostCardComponent implements OnInit {
 
     @Input()
     id?: number;
+    isLoggedIn$!: Observable<User>;
     authUser!: User;
     like = this.points;
     likeActive: boolean = false;
@@ -47,6 +49,7 @@ export class PostCardComponent implements OnInit {
         private notificationService: NotificationService,
     ) {}
     ngOnInit(): void {
+        this.isLoggedIn$ = this.authService.currentUser;
         this.authUser = this.authService.currentUserValue;
         if (this.authUser) {
             this.notificationData.sender = this.authUser.username;
